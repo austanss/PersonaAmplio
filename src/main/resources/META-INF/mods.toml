@@ -1,0 +1,17 @@
+modLoader="javafml" #mandatory
+loaderVersion="[36,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
+license="All rights reserved."
+
+[[mods]] #mandatory
+modId="personamplio" #mandatory
+version="${file.jarVersion}" #mandatory
+displayName="Persona Amplio" #mandatory
+credits="" #optional
+authors="austanss" #optional
+description='''
+"Improve the person."
+
+Unlock abilities. Increase your health points. Take less damage. Deal more damage. Fly.
+
+Do whatever you want. Progress through your worlds and make upgrades along the way to help you reach your goal. The possibilities end at 18446744100000000000.
+'''

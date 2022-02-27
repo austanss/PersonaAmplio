@@ -1,0 +1,12 @@
+{
+  "item.personamplio.nutrient_polymer": "Biomolecular Polymer",
+  "item.personamplio.insulated_plate": "Insulated Plate",
+  "item.personamplio.nucleus": "Nucleus",
+  "item.personamplio.dna_sequence": "DNA Sequence",
+
+  "block.personamplio.synthesis_chamber": "Synthetic Nucleic Fabricator",
+
+  "screen.personamplio.synthesis_chamber": "Synthetic Nucleic Fabricator",
+
+  "itemGroup.personamplio": "Persona Amplio"
+}

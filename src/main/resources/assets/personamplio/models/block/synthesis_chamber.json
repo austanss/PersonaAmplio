@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "personamplio:blocks/synthesis_chamber/side",
+    "up": "personamplio:blocks/synthesis_chamber/top"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "pmp",
+    "ece",
+    "pmp"
+  ],
+  "key":
+  {
+    "p": { "item": "personamplio:insulated_plate" },
+    "m": { "item": "minecraft:emerald" },
+    "e": { "item": "minecraft:ender_pearl" },
+    "c": { "item": "minecraft:crying_obsidian" }
+  },
+  "result":
+  {
+    "item": "personamplio:synthesis_chamber",
+    "count": 1
+  }
+}
