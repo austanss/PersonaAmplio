@@ -2,13 +2,13 @@
   "type": "minecraft:crafting_shaped",
   "pattern":
   [
-    "pmp",
-    "ece",
-    "pmp"
+    "cmc",
+    "epe",
+    "cmc"
   ],
   "key":
   {
-    "p": { "item": "personamplio:insulated_plate" },
+    "p": { "item": "personamplio:nutrient_polymer" },
     "m": { "item": "minecraft:emerald" },
     "e": { "item": "minecraft:ender_pearl" },
     "c": { "item": "minecraft:crying_obsidian" }

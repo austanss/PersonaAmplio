@@ -3,8 +3,13 @@
   "item.personamplio.insulated_plate": "Insulated Plate",
   "item.personamplio.nucleus": "Nucleus",
   "item.personamplio.dna_sequence": "DNA Sequence",
+  "item.personamplio.cytoplasm_bucket": "Cytoplasmic Solution Bucket",
 
   "block.personamplio.synthesis_chamber": "Synthetic Nucleic Fabricator",
+  "block.personamplio.cytoplasm": "Cytoplasmic Solution",
+
+  "fluid.personamplio.cytoplasm_source": "Cytoplasmic Solution",
+  "fluid.personamplio.cytoplasm_flowing": "Cytoplasmic Solution",
 
   "screen.personamplio.synthesis_chamber": "Synthetic Nucleic Fabricator",
 

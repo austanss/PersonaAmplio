@@ -2,6 +2,7 @@ package me.austanss.personamplio.common.tile;
 
 import me.austanss.personamplio.common.item.ItemRegistryManager;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
@@ -65,7 +66,7 @@ public class SynthesisChamberTile extends TileEntity implements ITickableTileEnt
                     return stack.getItem() == ItemRegistryManager.NUTRIENT_POLYMER.get();
                 if (slot == 1)
                     return true;
-                if (slot == 2 && insertingResult)
+                if (slot == 2 && insertingResult && stack.getItem() == ItemRegistryManager.NUCLEUS.get())
                     return true;
 
                 return false;

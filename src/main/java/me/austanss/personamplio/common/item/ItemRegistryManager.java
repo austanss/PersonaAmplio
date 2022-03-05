@@ -16,9 +16,9 @@ public class ItemRegistryManager {
     public void registerAll() {
         NUTRIENT_POLYMER = _register.register(NutrientPolymerItem.ITEM_ID, NutrientPolymerItem::new);
         SYNTHESIS_CHAMBER = _register.register(SynthesisChamberBlockItem.ITEM_ID, SynthesisChamberBlockItem::new);
-        INSULATED_PLATE = _register.register(InsulatedPlateItem.ITEM_ID, InsulatedPlateItem::new);
         NUCLEUS = _register.register(NucleusItem.ITEM_ID, NucleusItem::new);
         DNA_SEQUENCE = _register.register(DnaSequenceItem.ITEM_ID, DnaSequenceItem::new);
+        CYTOPLASM_BUCKET = _register.register(CytoplasmicSolutionBucketItem.ITEM_ID, CytoplasmicSolutionBucketItem::new);
 
         _register.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
@@ -27,9 +27,9 @@ public class ItemRegistryManager {
 
     public static RegistryObject<Item> NUTRIENT_POLYMER;
     public static RegistryObject<Item> SYNTHESIS_CHAMBER;
-    public static RegistryObject<Item> INSULATED_PLATE;
     public static RegistryObject<Item> NUCLEUS;
     public static RegistryObject<Item> DNA_SEQUENCE;
+    public static RegistryObject<Item> CYTOPLASM_BUCKET;
 
     public DeferredRegister<Item> getRegister() {
         return _register;

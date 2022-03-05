@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "personamplio:items/insulated_plate"
+    "layer0": "personamplio:items/cytoplasm_bucket"
   }
 }
