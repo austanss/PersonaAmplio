@@ -1,60 +1,25 @@
 package me.austanss.personamplio.common.tile;
 
 import me.austanss.personamplio.common.item.ItemRegistryManager;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.IIntArray;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
-public class SynthesisChamberTile extends TileEntity implements ITickableTileEntity {
-
-    public final ItemStackHandler inventory;
-    private final LazyOptional<IItemHandler> lazyHandler;
+public class SynthesisChamberTile extends MachineTile {
 
     private static final int SYNTHESIS_TICK_DURATION = 200;
 
-    boolean synthesizing = false;
-    int ticks = 0;
-    boolean insertingResult = false;
+    private static final int MATERIAL_SLOT = 0;
+    private static final int SEQUENCE_SLOT = 1;
+    private static final int RESULT_SLOT = 2;
 
-    public final IIntArray data = new IIntArray() {
-        @Override
-        public int get(int index) {
-            switch (index) {
-                case 0: return synthesizing ? 1 : 0;
-                case 1: return ticks;
-                default: return 0;
-            }
-        }
-
-        @Override
-        public void set(int p_221477_1_, int p_221477_2_) {
-            throw null;
-        }
-
-        @Override
-        public int getCount() {
-            return 2;
-        }
-    };
+    private static final int INVENTORY_SLOTS = 3;
 
     public SynthesisChamberTile() {
-        super(TileEntityTypeRegistryManager.SYNTHESIS_CHAMBER_ENTITY.get());
+        super(TileEntityTypeRegistryManager.SYNTHESIS_CHAMBER_TILE.get());
 
-        inventory = new ItemStackHandler(3) {
+        inventory = new ItemStackHandler(INVENTORY_SLOTS) {
             @Override
             protected void onContentsChanged(int slot) {
                 setChanged();
@@ -62,11 +27,11 @@ public class SynthesisChamberTile extends TileEntity implements ITickableTileEnt
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                if (slot == 0)
+                if (slot == MATERIAL_SLOT)
                     return stack.getItem() == ItemRegistryManager.NUTRIENT_POLYMER.get();
-                if (slot == 1)
-                    return true;
-                if (slot == 2 && insertingResult && stack.getItem() == ItemRegistryManager.NUCLEUS.get())
+                if (slot == SEQUENCE_SLOT)
+                    return stack.getItem() == ItemRegistryManager.DNA_SEQUENCE.get();
+                if (slot == RESULT_SLOT && finalizing && stack.getItem() == ItemRegistryManager.NUCLEUS.get())
                     return true;
 
                 return false;
@@ -80,33 +45,6 @@ public class SynthesisChamberTile extends TileEntity implements ITickableTileEnt
                 return 64;
             }
         };
-
-        lazyHandler = LazyOptional.of(() -> inventory);
-    }
-
-    @Nonnull
-    @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction side) {
-        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-            return lazyHandler.cast();
-
-        return super.getCapability(capability, side);
-    }
-
-    @Override
-    public CompoundNBT save(CompoundNBT nbt) {
-        nbt.put("inv", inventory.serializeNBT());
-        nbt.putInt("progress", ticks);
-        nbt.putBoolean("running", synthesizing);
-        return super.save(nbt);
-    }
-
-    @Override
-    public void load(BlockState state, CompoundNBT nbt) {
-        inventory.deserializeNBT(nbt.getCompound("inv"));
-        ticks = nbt.getInt("progress");
-        synthesizing = nbt.getBoolean("running");
-        super.load(state, nbt);
     }
 
     @Override
@@ -115,34 +53,34 @@ public class SynthesisChamberTile extends TileEntity implements ITickableTileEnt
                 inventory.getStackInSlot(0).getItem() == ItemRegistryManager.NUTRIENT_POLYMER.get() &&
                         inventory.getStackInSlot(1).getItem() == ItemRegistryManager.DNA_SEQUENCE.get();
 
-        if (!synthesizing && !containsCorrectIngredients)
+        if (!running && !containsCorrectIngredients)
             return;
 
-        if (!synthesizing && containsCorrectIngredients) {
-            synthesizing = true;
+        if (!running && containsCorrectIngredients) {
+            running = true;
             return;
         }
 
-        if (synthesizing && !containsCorrectIngredients) {
-            synthesizing = false;
+        if (running && !containsCorrectIngredients) {
+            running = false;
             ticks = 0;
             return;
         }
 
-        if (synthesizing && ticks < SYNTHESIS_TICK_DURATION) {
+        if (running && ticks < SYNTHESIS_TICK_DURATION) {
             ticks++;
             return;
         }
 
-        if (synthesizing && ticks >= SYNTHESIS_TICK_DURATION) {
-            synthesizing = false;
+        if (running && ticks >= SYNTHESIS_TICK_DURATION) {
+            running = false;
             ticks = 0;
 
             inventory.getStackInSlot(0).shrink(1);
 
-            insertingResult = true;
+            finalizing = true;
             inventory.insertItem(2, new ItemStack(ItemRegistryManager.NUCLEUS.get(), 1), false);
-            insertingResult = false;
+            finalizing = false;
         }
     }
 }

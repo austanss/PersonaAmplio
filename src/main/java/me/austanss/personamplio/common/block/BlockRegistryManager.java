@@ -19,12 +19,15 @@ public class BlockRegistryManager {
 
     public void registerAll() {
         SYNTHESIS_CHAMBER = _register.register(SynthesisChamberBlock.BLOCK_ID, SynthesisChamberBlock::new);
+        ACCELERATED_DECOMPOSER = _register.register(AcceleratedDecomposerBlock.BLOCK_ID, AcceleratedDecomposerBlock::new);
+
         CYTOPlASM = _register.register(CytoplasmicSolutionFluid.BLOCK_ID, () -> new FlowingFluidBlock(() -> FluidRegistryManager.CYTOPLASM_SOURCE.get(), AbstractBlock.Properties.of(Material.WATER)));
 
         _register.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
     public static RegistryObject<Block> SYNTHESIS_CHAMBER;
+    public static RegistryObject<Block> ACCELERATED_DECOMPOSER;
 
     public static RegistryObject<FlowingFluidBlock> CYTOPlASM;
 

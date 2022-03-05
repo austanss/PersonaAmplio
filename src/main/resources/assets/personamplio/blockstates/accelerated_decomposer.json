@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "personamplio:block/accelerated_decomposer" }
+  }
+}

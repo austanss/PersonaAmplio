@@ -5,26 +5,21 @@ import me.austanss.personamplio.common.tile.SynthesisChamberTile;
 import me.austanss.personamplio.common.tile.TileEntityTypeRegistryManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
@@ -36,10 +31,7 @@ public class SynthesisChamberBlock extends Block {
     private SynthesisChamberTile tile;
 
     public SynthesisChamberBlock() {
-        super(Block.Properties.of(Material.HEAVY_METAL)
-                .harvestTool(ToolType.PICKAXE)
-                .requiresCorrectToolForDrops()
-                .harvestLevel(2));
+        super(BlockCommons.MACHINE_BLOCK_PROPERTIES);
     }
 
     @Override
@@ -50,7 +42,7 @@ public class SynthesisChamberBlock extends Block {
     @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        tile = TileEntityTypeRegistryManager.SYNTHESIS_CHAMBER_ENTITY.get().create();
+        tile = TileEntityTypeRegistryManager.SYNTHESIS_CHAMBER_TILE.get().create();
         return tile;
     }
 

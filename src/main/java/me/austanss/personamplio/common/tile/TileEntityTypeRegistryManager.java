@@ -14,13 +14,17 @@ public class TileEntityTypeRegistryManager {
     }
 
     public void registerAll() {
-        SYNTHESIS_CHAMBER_ENTITY = _register.register("synthesis_chamber_entity",
+        SYNTHESIS_CHAMBER_TILE = _register.register("synthesis_chamber_tile",
                 () -> TileEntityType.Builder.of(SynthesisChamberTile::new, BlockRegistryManager.SYNTHESIS_CHAMBER.get()).build(null));
+
+        ACCELERATED_DECOMPOSER_TILE = _register.register("accelerated_decomposer_tile",
+                () -> TileEntityType.Builder.of(AcceleratedDecomposerTile::new, BlockRegistryManager.ACCELERATED_DECOMPOSER.get()).build(null));
 
         _register.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
-    public static RegistryObject<TileEntityType<SynthesisChamberTile>> SYNTHESIS_CHAMBER_ENTITY;
+    public static RegistryObject<TileEntityType<SynthesisChamberTile>> SYNTHESIS_CHAMBER_TILE;
+    public static RegistryObject<TileEntityType<AcceleratedDecomposerTile>> ACCELERATED_DECOMPOSER_TILE;
 
     private final DeferredRegister<TileEntityType<?>> _register;
 

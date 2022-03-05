@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "personamplio:blocks/accelerated_decomposer/side",
+    "up": "personamplio:blocks/accelerated_decomposer/top"
+  }
+}

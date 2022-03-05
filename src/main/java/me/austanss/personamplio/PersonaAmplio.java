@@ -1,10 +1,14 @@
 package me.austanss.personamplio;
 
 import me.austanss.personamplio.common.RegistryManager;
+import me.austanss.personamplio.common.block.BlockRegistryManager;
 import me.austanss.personamplio.common.container.ContainerTypeRegistryManager;
+import me.austanss.personamplio.common.fluid.FluidRegistryManager;
 import me.austanss.personamplio.common.screen.SynthesisChamberScreen;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -47,6 +51,10 @@ public class PersonaAmplio
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         LOGGER.info("[Persona Amplio] Registering client-side modifications...");
+
+        RenderTypeLookup.setRenderLayer(BlockRegistryManager.CYTOPlASM.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(FluidRegistryManager.CYTOPLASM_SOURCE.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(FluidRegistryManager.CYTOPLASM_FLOWING.get(), RenderType.translucent());
 
         ScreenManager.register(ContainerTypeRegistryManager.SYNTHESIS_CHAMBER_CONTAINER.get(), SynthesisChamberScreen::new);
     }

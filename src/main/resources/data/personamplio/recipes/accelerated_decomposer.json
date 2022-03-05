@@ -2,21 +2,21 @@
   "type": "minecraft:crafting_shaped",
   "pattern":
   [
-    "cpc",
+    "ele",
     "nbn",
-    "cec"
+    "ece"
   ],
   "key":
   {
-    "p": { "item": "personamplio:nutrient_polymer" },
+    "c": { "item": "minecraft:chest" },
     "e": { "item": "minecraft:emerald" },
     "b": { "item": "minecraft:iron_block"},
     "n": { "item": "minecraft:iron_ingot" },
-    "c": { "item": "minecraft:crying_obsidian" }
+    "l": { "item": "minecraft:oak_leaves" }
   },
   "result":
   {
-    "item": "personamplio:synthesis_chamber",
+    "item": "personamplio:accelerated_decomposer",
     "count": 1
   }
 }

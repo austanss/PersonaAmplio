@@ -24,8 +24,8 @@ public abstract class CytoplasmicSolutionFluid extends ForgeFlowingFluid {
                     .luminosity(3)
                     .temperature(30)
                     .sound(SoundEvents.WATER_AMBIENT)
-                    .color(0x11EE11))
-                    .slopeFindDistance(5)
+                    .color(0xBB59CA59))
+                    .slopeFindDistance(4)
                     .block(() -> BlockRegistryManager.CYTOPlASM.get())
                     .bucket(() -> ItemRegistryManager.CYTOPLASM_BUCKET.get());
 

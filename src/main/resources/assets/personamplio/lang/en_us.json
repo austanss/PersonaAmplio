@@ -5,13 +5,15 @@
   "item.personamplio.dna_sequence": "DNA Sequence",
   "item.personamplio.cytoplasm_bucket": "Cytoplasmic Solution Bucket",
 
-  "block.personamplio.synthesis_chamber": "Synthetic Nucleic Fabricator",
+  "block.personamplio.synthesis_chamber": "Nucleic Synthesizer",
+  "block.personamplio.accelerated_decomposer": "Accelerated Decomposer",
   "block.personamplio.cytoplasm": "Cytoplasmic Solution",
 
   "fluid.personamplio.cytoplasm_source": "Cytoplasmic Solution",
   "fluid.personamplio.cytoplasm_flowing": "Cytoplasmic Solution",
 
-  "screen.personamplio.synthesis_chamber": "Synthetic Nucleic Fabricator",
+  "screen.personamplio.synthesis_chamber": "Nucleic Synthesizer",
+  "screen.personamplio.accelerated_decomposer": "Accelerated Decomposer",
 
   "itemGroup.personamplio": "Persona Amplio"
 }
