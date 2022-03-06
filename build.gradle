@@ -15,7 +15,7 @@ apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = 'prototype'
+version = 'v0.3.0'
 group = 'me.austanss.personamplio'
 archivesBaseName = 'personamplio'
 
