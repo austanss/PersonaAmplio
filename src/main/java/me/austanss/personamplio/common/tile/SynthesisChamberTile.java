@@ -2,9 +2,15 @@ package me.austanss.personamplio.common.tile;
 
 import me.austanss.personamplio.common.item.ItemRegistryManager;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Direction;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class SynthesisChamberTile extends MachineTile {
 
@@ -45,42 +51,53 @@ public class SynthesisChamberTile extends MachineTile {
                 return 64;
             }
         };
+
+        lazy = LazyOptional.of(() -> inventory);
+    }
+
+    private final LazyOptional<IItemHandler> lazy;
+
+    @Nonnull
+    @Override
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction side) {
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+            return lazy.cast();
+
+        return super.getCapability(capability, side);
     }
 
     @Override
     public void tick() {
-        boolean containsCorrectIngredients =
+        boolean valid =
                 inventory.getStackInSlot(0).getItem() == ItemRegistryManager.NUTRIENT_POLYMER.get() &&
                         inventory.getStackInSlot(1).getItem() == ItemRegistryManager.DNA_SEQUENCE.get();
 
-        if (!running && !containsCorrectIngredients)
+        if (!running && !valid)
             return;
 
-        if (!running && containsCorrectIngredients) {
+        if (!running) {
             running = true;
             return;
         }
 
-        if (running && !containsCorrectIngredients) {
+        if (!valid) {
             running = false;
             ticks = 0;
             return;
         }
 
-        if (running && ticks < SYNTHESIS_TICK_DURATION) {
+        if (ticks < SYNTHESIS_TICK_DURATION) {
             ticks++;
             return;
         }
 
-        if (running && ticks >= SYNTHESIS_TICK_DURATION) {
-            running = false;
-            ticks = 0;
+        running = false;
+        ticks = 0;
 
-            inventory.getStackInSlot(0).shrink(1);
+        inventory.getStackInSlot(MATERIAL_SLOT).shrink(1);
 
-            finalizing = true;
-            inventory.insertItem(2, new ItemStack(ItemRegistryManager.NUCLEUS.get(), 1), false);
-            finalizing = false;
-        }
+        finalizing = true;
+        inventory.insertItem(RESULT_SLOT, ItemRegistryManager.NUCLEUS.get().getDefaultInstance(), false);
+        finalizing = false;
     }
 }

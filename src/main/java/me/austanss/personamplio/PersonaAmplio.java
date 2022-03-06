@@ -2,8 +2,10 @@ package me.austanss.personamplio;
 
 import me.austanss.personamplio.common.RegistryManager;
 import me.austanss.personamplio.common.block.BlockRegistryManager;
+import me.austanss.personamplio.common.container.AcceleratedDecomposerContainer;
 import me.austanss.personamplio.common.container.ContainerTypeRegistryManager;
 import me.austanss.personamplio.common.fluid.FluidRegistryManager;
+import me.austanss.personamplio.common.screen.AcceleratedDecomposerScreen;
 import me.austanss.personamplio.common.screen.SynthesisChamberScreen;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.ScreenManager;
@@ -57,6 +59,7 @@ public class PersonaAmplio
         RenderTypeLookup.setRenderLayer(FluidRegistryManager.CYTOPLASM_FLOWING.get(), RenderType.translucent());
 
         ScreenManager.register(ContainerTypeRegistryManager.SYNTHESIS_CHAMBER_CONTAINER.get(), SynthesisChamberScreen::new);
+        ScreenManager.register(ContainerTypeRegistryManager.ACCELERATED_DECOMPOSER_CONTAINER.get(), AcceleratedDecomposerScreen::new);
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)

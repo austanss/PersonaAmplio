@@ -9,8 +9,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-
 public class SynthesisChamberScreen extends ContainerScreen<SynthesisChamberContainer> {
 
     private final ResourceLocation SCREEN_RESOURCE = new ResourceLocation(PersonaAmplio.MODID, "textures/screens/synthesis_chamber.png");

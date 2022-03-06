@@ -24,10 +24,18 @@ public class ContainerTypeRegistryManager {
                     return new SynthesisChamberContainer(id, world, pos, inventory, inventory.player);
                 }))));
 
+        ACCELERATED_DECOMPOSER_CONTAINER = _register.register("accelerated_decomposer_container",
+                () -> IForgeContainerType.create((((id, inventory, data) -> {
+                    BlockPos pos = data.readBlockPos();
+                    World world = inventory.player.getCommandSenderWorld();
+                    return new AcceleratedDecomposerContainer(id, world, pos, inventory, inventory.player);
+                }))));
+
         _register.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
     public static RegistryObject<ContainerType<SynthesisChamberContainer>> SYNTHESIS_CHAMBER_CONTAINER;
+    public static RegistryObject<ContainerType<AcceleratedDecomposerContainer>> ACCELERATED_DECOMPOSER_CONTAINER;
 
     private final DeferredRegister<ContainerType<?>> _register;
 

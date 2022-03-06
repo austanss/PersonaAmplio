@@ -19,7 +19,6 @@ import javax.annotation.Nullable;
 public abstract class MachineTile extends TileEntity implements ITickableTileEntity {
 
     public ItemStackHandler inventory;
-    private final LazyOptional<IItemHandler> lazy;
 
     boolean running = false;
     int ticks = 0;
@@ -52,16 +51,6 @@ public abstract class MachineTile extends TileEntity implements ITickableTileEnt
 
     public MachineTile(TileEntityType<?> type) {
         super(type);
-        lazy = LazyOptional.of(() -> inventory);
-    }
-
-    @Nonnull
-    @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction side) {
-        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-            return lazy.cast();
-
-        return super.getCapability(capability, side);
     }
 
     @Override
