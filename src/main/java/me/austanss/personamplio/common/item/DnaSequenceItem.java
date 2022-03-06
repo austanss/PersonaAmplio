@@ -1,6 +1,6 @@
 package me.austanss.personamplio.common.item;
 
-import me.austanss.personamplio.PersonaAmplioItemGroup;
+import me.austanss.personamplio.common.PersonaAmplioItemGroup;
 import net.minecraft.item.Item;
 import net.minecraft.item.Rarity;
 

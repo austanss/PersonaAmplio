@@ -10,7 +10,8 @@ public class BlockCommons {
 
     public static final AbstractBlock.Properties MACHINE_BLOCK_PROPERTIES = Block.Properties.of(Material.HEAVY_METAL)
             .harvestTool(ToolType.PICKAXE)
-            .requiresCorrectToolForDrops()
             .harvestLevel(2)
+            .friction(0.9f)
+            .strength(20f)
             .noDrops();
 }

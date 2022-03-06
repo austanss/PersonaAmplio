@@ -24,31 +24,6 @@ public abstract class MachineTile extends TileEntity implements ITickableTileEnt
     int ticks = 0;
     boolean finalizing = false;
 
-    public final IIntArray data = new IIntArray() {
-        @Override
-        public int get(int index) {
-            switch (index) {
-                case 0: return running ? 1 : 0;
-                case 1: return ticks;
-                default: throw new IndexOutOfBoundsException();
-            }
-        }
-
-        @Override
-        public void set(int index, int value) {
-            switch (index) {
-                case 0: running = value > 0;
-                case 1: ticks = value;
-                default: throw new IndexOutOfBoundsException();
-            }
-        }
-
-        @Override
-        public int getCount() {
-            return 2;
-        }
-    };
-
     public MachineTile(TileEntityType<?> type) {
         super(type);
     }

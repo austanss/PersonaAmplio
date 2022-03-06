@@ -2,14 +2,12 @@ package me.austanss.personamplio.common.container;
 
 import me.austanss.personamplio.common.block.BlockRegistryManager;
 import me.austanss.personamplio.common.fluid.FluidRegistryManager;
-import me.austanss.personamplio.common.item.CytoplasmicSolutionBucketItem;
 import me.austanss.personamplio.common.item.ItemRegistryManager;
 import me.austanss.personamplio.common.tile.AcceleratedDecomposerTile;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.IWorldPosCallable;
@@ -22,7 +20,6 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
@@ -37,6 +34,7 @@ public class AcceleratedDecomposerContainer extends Container {
 
     private IntReferenceHolder progress;
     private IntReferenceHolder running;
+    private IntReferenceHolder volume;
 
     public AcceleratedDecomposerContainer(int id, World worldIn, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
         super(ContainerTypeRegistryManager.ACCELERATED_DECOMPOSER_CONTAINER.get(), id);
@@ -53,77 +51,94 @@ public class AcceleratedDecomposerContainer extends Container {
 
         running = IntReferenceHolder.forContainer(tile.data, 0);
         progress = IntReferenceHolder.forContainer(tile.data, 1);
+        volume = IntReferenceHolder.forContainer(tile.data, 2);
 
         layoutContainer(8, 86);
 
-        tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(consumer -> {
-            addSlot(new SlotItemHandler(consumer, 0, 26, 22));
-            addSlot(new SlotItemHandler(consumer, 1, 26, 50));
+        tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(inventory -> {
+            addSlot(new SlotItemHandler(inventory, 0, 26, 22));
+            addSlot(new SlotItemHandler(inventory, 1, 26, 50));
 
-            addSlot(new SlotItemHandler(consumer, 2, 57, 22));
-            addSlot(new SlotItemHandler(consumer, 3, 75, 22));
-            addSlot(new SlotItemHandler(consumer, 4, 93, 22));
-            addSlot(new SlotItemHandler(consumer, 5, 111, 22));
+            addSlot(new SlotItemHandler(inventory, 2, 57, 22));
+            addSlot(new SlotItemHandler(inventory, 3, 75, 22));
+            addSlot(new SlotItemHandler(inventory, 4, 93, 22));
+            addSlot(new SlotItemHandler(inventory, 5, 111, 22));
 
-            addSlot(new SlotItemHandler(consumer, 6, 57, 50));
-            addSlot(new SlotItemHandler(consumer, 7, 75, 50));
-            addSlot(new SlotItemHandler(consumer, 8, 93, 50));
-            addSlot(new SlotItemHandler(consumer, 9, 111, 50));
+            addSlot(new SlotItemHandler(inventory, 6, 57, 50));
+            addSlot(new SlotItemHandler(inventory, 7, 75, 50));
+            addSlot(new SlotItemHandler(inventory, 8, 93, 50));
+            addSlot(new SlotItemHandler(inventory, 9, 111, 50));
         });
 
-        tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).ifPresent(consumer -> {
-            addSlot(new SlotItemHandler(new IItemHandlerModifiable() {
+        tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).ifPresent(tanks -> {
+            addSlot(new SlotItemHandler(null, 10, 144, 36) {
+
                 @Override
-                public void setStackInSlot(int slot, @Nonnull ItemStack stack) {
-                    return;
+                public void set(@Nonnull ItemStack stack) {
+                    if (stack.getItem() == ItemRegistryManager.CYTOPLASM_BUCKET.get()) {
+                        if (tanks.getFluidInTank(0).getAmount() >= (FluidAttributes.BUCKET_VOLUME * 10)) {
+                            playerInventory.setCarried(ItemRegistryManager.CYTOPLASM_BUCKET.get().getDefaultInstance());
+                            return;
+                        }
+                        tanks.fill(new FluidStack(FluidRegistryManager.CYTOPLASM_SOURCE.get(), FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.EXECUTE);
+                        playerInventory.setCarried(Items.BUCKET.getDefaultInstance());
+                        if (playerInventory.getCarried().getItem() != Items.BUCKET)
+                            playerInventory.setCarried(new ItemStack(Items.BUCKET));
+                        broadcastChanges();
+                    }
+                    else if (stack.getItem() == Items.BUCKET) {
+                        if (tanks.getFluidInTank(0).getAmount() < FluidAttributes.BUCKET_VOLUME) {
+                            playerInventory.setCarried(Items.BUCKET.getDefaultInstance());
+                            return;
+                        }
+                        tanks.drain(FluidAttributes.BUCKET_VOLUME, IFluidHandler.FluidAction.EXECUTE);
+                        playerInventory.setCarried(ItemRegistryManager.CYTOPLASM_BUCKET.get().getDefaultInstance());
+                        if (playerInventory.getCarried().getItem() != ItemRegistryManager.CYTOPLASM_BUCKET.get())
+                            playerInventory.setCarried(new ItemStack(ItemRegistryManager.CYTOPLASM_BUCKET.get()));
+                    }
+                }
+
+                @Nonnull
+                @Override
+                public ItemStack getItem() {
+                    return ItemStack.EMPTY;
                 }
 
                 @Override
-                public int getSlots() {
+                public int getMaxStackSize() {
                     return 1;
                 }
 
+                @Override
+                public int getMaxStackSize(@Nonnull ItemStack stack) {
+                    return 1;
+                }
+
+                @Override
+                public boolean mayPlace(@Nonnull ItemStack stack) {
+                    if (stack.isEmpty()) return false;
+                    if (stack.getItem() == Items.BUCKET) return true;
+                    if (stack.getItem() == ItemRegistryManager.CYTOPLASM_BUCKET.get()) return true;
+                    else return false;
+                }
+
+                @Override
+                public boolean mayPickup(PlayerEntity playerIn) {
+                    return false;
+                }
+
+                @Override
+                public IItemHandler getItemHandler() {
+                    return null;
+                }
+
                 @Nonnull
                 @Override
-                public ItemStack getStackInSlot(int slot) {
+                public ItemStack remove(int amount) {
                     return ItemStack.EMPTY;
                 }
-
-                @Nonnull
-                @Override
-                public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-                    if (stack.getItem() instanceof CytoplasmicSolutionBucketItem) {
-                        consumer.fill(new FluidStack(FluidRegistryManager.CYTOPLASM_SOURCE.get(), FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.EXECUTE);
-
-                        return Items.BUCKET.getDefaultInstance();
-                    }
-                    else if (stack.getItem() instanceof BucketItem) {
-                        consumer.drain(FluidAttributes.BUCKET_VOLUME, IFluidHandler.FluidAction.EXECUTE);
-
-                        return ItemRegistryManager.CYTOPLASM_BUCKET.get().getDefaultInstance();
-                    }
-                    else
-                        return stack;
-                }
-
-                @Nonnull
-                @Override
-                public ItemStack extractItem(int slot, int amount, boolean simulate) {
-                    return ItemStack.EMPTY;
-                }
-
-                @Override
-                public int getSlotLimit(int slot) {
-                    return 0;
-                }
-
-                @Override
-                public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                    return stack.getItem() instanceof CytoplasmicSolutionBucketItem || stack.getItem() instanceof BucketItem;
-                }
-            }, 14, 144, 36));
+            });
         });
-
     }
 
     public boolean isRunning() {
@@ -135,10 +150,6 @@ public class AcceleratedDecomposerContainer extends Container {
     }
 
     public int getTankVolume() {
-        AtomicInteger volume = new AtomicInteger(-1);
-        tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).ifPresent(consumer -> {
-            volume.set(consumer.getFluidInTank(0).getAmount());
-        });
         return volume.get();
     }
 
@@ -178,7 +189,7 @@ public class AcceleratedDecomposerContainer extends Container {
     private static final int PLAYER_SLOTS = HOTBAR_SLOTS + INVENTORY_SLOTS;
     private static final int FIRST_BLOCK_INVENTORY_SLOT = PLAYER_SLOTS;
 
-    private static final int BLOCK_INVENTORY_SLOTS = 3;
+    private static final int BLOCK_INVENTORY_SLOTS = 10;
 
     @Override
     public ItemStack quickMoveStack(PlayerEntity player, int index) {

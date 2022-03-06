@@ -2,10 +2,12 @@ package me.austanss.personamplio.common.tile;
 
 import me.austanss.personamplio.common.fluid.FluidRegistryManager;
 import me.austanss.personamplio.common.item.ItemRegistryManager;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
+import net.minecraft.util.IIntArray;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -38,6 +40,33 @@ public class AcceleratedDecomposerTile extends MachineTile {
     private static final int MATERIALS_PER_OUTPUT = 20;
 
     public final FluidTank tank;
+
+    public final IIntArray data = new IIntArray() {
+        @Override
+        public int get(int index) {
+            switch (index) {
+                case 0: return running ? 1 : 0;
+                case 1: return ticks;
+                case 2: return tank.getFluidAmount();
+                default: throw new IndexOutOfBoundsException();
+            }
+        }
+
+        @Override
+        public void set(int index, int value) {
+            switch (index) {
+                case 0: running = value > 0;
+                case 1: ticks = value;
+                case 2: tank.setFluid(new FluidStack(FluidRegistryManager.CYTOPLASM_SOURCE.get(), value));
+                default: throw new IndexOutOfBoundsException();
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+    };
 
     public AcceleratedDecomposerTile() {
         super(TileEntityTypeRegistryManager.ACCELERATED_DECOMPOSER_TILE.get());
@@ -97,6 +126,17 @@ public class AcceleratedDecomposerTile extends MachineTile {
             default:
                 return false;
         }
+    }
+
+    @Override
+    public CompoundNBT save(CompoundNBT nbt) {
+        return super.save(tank.writeToNBT(nbt));
+    }
+
+    @Override
+    public void load(BlockState state, CompoundNBT nbt) {
+        tank.readFromNBT(nbt);
+        super.load(state, nbt);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package me.austanss.personamplio.common.item;
 
-import me.austanss.personamplio.PersonaAmplioItemGroup;
+import me.austanss.personamplio.common.PersonaAmplioItemGroup;
 import me.austanss.personamplio.common.fluid.FluidRegistryManager;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;

@@ -1,7 +1,5 @@
-package me.austanss.personamplio;
+package me.austanss.personamplio.common;
 
-import mcp.MethodsReturnNonnullByDefault;
-import me.austanss.personamplio.common.block.BlockRegistryManager;
 import me.austanss.personamplio.common.item.ItemRegistryManager;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;

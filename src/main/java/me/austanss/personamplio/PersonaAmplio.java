@@ -5,6 +5,7 @@ import me.austanss.personamplio.common.block.BlockRegistryManager;
 import me.austanss.personamplio.common.container.AcceleratedDecomposerContainer;
 import me.austanss.personamplio.common.container.ContainerTypeRegistryManager;
 import me.austanss.personamplio.common.fluid.FluidRegistryManager;
+import me.austanss.personamplio.common.network.PersonaAmplioNetworkHandler;
 import me.austanss.personamplio.common.screen.AcceleratedDecomposerScreen;
 import me.austanss.personamplio.common.screen.SynthesisChamberScreen;
 import net.minecraft.block.Block;
@@ -42,6 +43,8 @@ public class PersonaAmplio
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
 
         registries.registerAll();
+
+        PersonaAmplioNetworkHandler.registerPackets();
 
         MinecraftForge.EVENT_BUS.register(this);
     }

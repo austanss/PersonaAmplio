@@ -7,6 +7,7 @@ import me.austanss.personamplio.common.tile.AcceleratedDecomposerTile;
 import me.austanss.personamplio.common.tile.TileEntityTypeRegistryManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -99,6 +100,10 @@ public class AcceleratedDecomposerBlock extends Block {
 
         CompoundNBT fluidTag = new CompoundNBT();
         fluidTag.putInt("fluid_volume", tile.tank.getFluidAmount());
+
+        PlayerEntity playerLikelyDestroying = worldIn.getNearestPlayer(EntityPredicate.DEFAULT, pos.getX(), pos.getY(), pos.getZ());
+
+        if (!playerLikelyDestroying.isCreative())
         InventoryHelper.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(),
                 new ItemStack(ItemRegistryManager.ACCELERATED_DECOMPOSER.get(), 1, fluidTag));
 

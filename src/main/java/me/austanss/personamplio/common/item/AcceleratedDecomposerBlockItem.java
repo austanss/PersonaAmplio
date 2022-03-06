@@ -1,12 +1,10 @@
 package me.austanss.personamplio.common.item;
 
-import me.austanss.personamplio.PersonaAmplioItemGroup;
+import me.austanss.personamplio.common.PersonaAmplioItemGroup;
 import me.austanss.personamplio.common.block.AcceleratedDecomposerBlock;
 import me.austanss.personamplio.common.block.BlockRegistryManager;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Rarity;
-import net.minecraft.util.ActionResultType;
 
 public class AcceleratedDecomposerBlockItem extends BlockItem {
     public static final String ITEM_ID = AcceleratedDecomposerBlock.BLOCK_ID;

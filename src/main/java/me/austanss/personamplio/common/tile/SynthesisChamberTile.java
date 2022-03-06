@@ -3,6 +3,7 @@ package me.austanss.personamplio.common.tile;
 import me.austanss.personamplio.common.item.ItemRegistryManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
+import net.minecraft.util.IIntArray;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -21,6 +22,31 @@ public class SynthesisChamberTile extends MachineTile {
     private static final int RESULT_SLOT = 2;
 
     private static final int INVENTORY_SLOTS = 3;
+
+    public final IIntArray data = new IIntArray() {
+        @Override
+        public int get(int index) {
+            switch (index) {
+                case 0: return running ? 1 : 0;
+                case 1: return ticks;
+                default: throw new IndexOutOfBoundsException();
+            }
+        }
+
+        @Override
+        public void set(int index, int value) {
+            switch (index) {
+                case 0: running = value > 0;
+                case 1: ticks = value;
+                default: throw new IndexOutOfBoundsException();
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+    };
 
     public SynthesisChamberTile() {
         super(TileEntityTypeRegistryManager.SYNTHESIS_CHAMBER_TILE.get());

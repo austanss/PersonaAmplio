@@ -1,6 +1,6 @@
 package me.austanss.personamplio.common.item;
 
-import me.austanss.personamplio.PersonaAmplioItemGroup;
+import me.austanss.personamplio.common.PersonaAmplioItemGroup;
 import me.austanss.personamplio.common.block.BlockRegistryManager;
 import me.austanss.personamplio.common.block.SynthesisChamberBlock;
 import net.minecraft.item.BlockItem;
