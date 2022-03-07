@@ -31,6 +31,8 @@ public class PersonaAmplioItemGroup extends ItemGroup {
 
         list.add(new ItemStack(ItemRegistryManager.CYTOPLASM_BUCKET.get()));
 
+        list.add(new ItemStack(ItemRegistryManager.SWAB.get()));
+
         list.add(new ItemStack(ItemRegistryManager.DNA_SEQUENCE.get()));
         list.add(new ItemStack(ItemRegistryManager.NUCLEUS.get()));
         list.add(new ItemStack(ItemRegistryManager.NUTRIENT_POLYMER.get()));

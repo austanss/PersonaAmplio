@@ -18,6 +18,8 @@ public class ItemRegistryManager {
         NUCLEUS = _register.register(NucleusItem.ITEM_ID, NucleusItem::new);
         DNA_SEQUENCE = _register.register(DnaSequenceItem.ITEM_ID, DnaSequenceItem::new);
 
+        SWAB = _register.register(SwabItem.ITEM_ID, SwabItem::new);
+
         SYNTHESIS_CHAMBER = _register.register(SynthesisChamberBlockItem.ITEM_ID, SynthesisChamberBlockItem::new);
         ACCELERATED_DECOMPOSER = _register.register(AcceleratedDecomposerBlockItem.ITEM_ID, AcceleratedDecomposerBlockItem::new);
 
@@ -31,6 +33,8 @@ public class ItemRegistryManager {
     public static RegistryObject<Item> NUTRIENT_POLYMER;
     public static RegistryObject<Item> NUCLEUS;
     public static RegistryObject<Item> DNA_SEQUENCE;
+
+    public static RegistryObject<Item> SWAB;
 
     public static RegistryObject<Item> SYNTHESIS_CHAMBER;
     public static RegistryObject<Item> ACCELERATED_DECOMPOSER;
