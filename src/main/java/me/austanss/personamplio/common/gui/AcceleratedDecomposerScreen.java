@@ -1,4 +1,4 @@
-package me.austanss.personamplio.common.screen;
+package me.austanss.personamplio.common.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -11,7 +11,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class AcceleratedDecomposerScreen extends ContainerScreen<AcceleratedDecomposerContainer> {
 
-    private final ResourceLocation SCREEN_RESOURCE = new ResourceLocation(PersonaAmplio.MODID, "textures/screens/accelerated_decomposer.png");
+    private final ResourceLocation SCREEN_RESOURCE = new ResourceLocation(PersonaAmplio.MODID, "textures/gui/accelerated_decomposer.png");
 
     public AcceleratedDecomposerScreen(AcceleratedDecomposerContainer container, PlayerInventory inventory, ITextComponent text) {
         super(container, inventory, text);

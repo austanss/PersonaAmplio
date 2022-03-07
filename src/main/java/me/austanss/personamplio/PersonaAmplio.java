@@ -2,18 +2,15 @@ package me.austanss.personamplio;
 
 import me.austanss.personamplio.common.RegistryManager;
 import me.austanss.personamplio.common.block.BlockRegistryManager;
-import me.austanss.personamplio.common.container.AcceleratedDecomposerContainer;
 import me.austanss.personamplio.common.container.ContainerTypeRegistryManager;
 import me.austanss.personamplio.common.fluid.FluidRegistryManager;
 import me.austanss.personamplio.common.network.PersonaAmplioNetworkHandler;
-import me.austanss.personamplio.common.screen.AcceleratedDecomposerScreen;
-import me.austanss.personamplio.common.screen.SynthesisChamberScreen;
-import net.minecraft.block.Block;
+import me.austanss.personamplio.common.gui.AcceleratedDecomposerScreen;
+import me.austanss.personamplio.common.gui.SynthesisChamberScreen;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -49,8 +46,7 @@ public class PersonaAmplio
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    private void setup(final FMLCommonSetupEvent event)
-    {
+    private void setup(final FMLCommonSetupEvent event) {
         LOGGER.info("[Persona Amplio] Registering common modifications...");
     }
 
@@ -65,12 +61,10 @@ public class PersonaAmplio
         ScreenManager.register(ContainerTypeRegistryManager.ACCELERATED_DECOMPOSER_CONTAINER.get(), AcceleratedDecomposerScreen::new);
     }
 
-    private void enqueueIMC(final InterModEnqueueEvent event)
-    {
+    private void enqueueIMC(final InterModEnqueueEvent event) {
     }
 
-    private void processIMC(final InterModProcessEvent event)
-    {
+    private void processIMC(final InterModProcessEvent event) {
         LOGGER.info("[Persona Amplio] Received IMC: {}", event.getIMCStream().
                 map(m->m.getMessageSupplier().get()).
                 collect(Collectors.toList()));
@@ -79,13 +73,5 @@ public class PersonaAmplio
     @SubscribeEvent
     public void onServerStarting(FMLServerStartingEvent event) {
         LOGGER.info("[Persona Amplio] Registering server-side modifications...");
-    }
-
-    @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
-    public static class RegistryEvents {
-        @SubscribeEvent
-        public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
-            LOGGER.info("[Persona Amplio] Registering items and blocks...");
-        }
     }
 }

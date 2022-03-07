@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "personamplio:items/dna_sequence"
+    "layer0": "personamplio:item/dna_sequence"
   }
 }

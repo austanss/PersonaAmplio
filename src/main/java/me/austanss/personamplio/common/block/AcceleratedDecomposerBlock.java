@@ -74,7 +74,7 @@ public class AcceleratedDecomposerBlock extends Block {
         TileEntity tile = worldIn.getBlockEntity(pos);
 
         if (!(tile instanceof AcceleratedDecomposerTile))
-            throw new IllegalStateException("Mismatch between block and tile entity");
+            throw new IllegalStateException("Mismatch between blocks and tile entity");
 
         INamedContainerProvider provider = new INamedContainerProvider() {
             @Override

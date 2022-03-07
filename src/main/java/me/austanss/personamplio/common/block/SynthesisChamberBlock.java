@@ -62,7 +62,7 @@ public class SynthesisChamberBlock extends Block {
         TileEntity tile = worldIn.getBlockEntity(pos);
 
         if (!(tile instanceof SynthesisChamberTile))
-            throw new IllegalStateException("Mismatch between block and tile entity");
+            throw new IllegalStateException("Mismatch between blocks and tile entity");
 
         INamedContainerProvider provider = new INamedContainerProvider() {
             @Override
